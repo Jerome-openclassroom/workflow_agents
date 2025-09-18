@@ -25,6 +25,29 @@ L’objectif est de démontrer une approche **agentique distribuée**, avec prom
 
 ---
 
+## ☀️ Calcul scientifique : Irradiation solaire moyenne
+
+Le workflow ne se contente pas de récupérer des données brutes : il permet aussi d’en extraire des **indicateurs physiques**.
+
+Exemple pour Marseille (18/09/2025) :  
+- **Rayonnement solaire cumulé** : 19.38 MJ/m²  
+- **Lever du soleil** : 07:21  
+- **Coucher du soleil** : 19:43  
+- **Durée d’ensoleillement** : ≈ 12.37 h  
+
+Conversion :  
+- 19.38 MJ/m² = 19,380,000 J/m²  
+- Durée = 12.37 h = 44,532 s  
+
+Irradiation moyenne :  
+\[
+\frac{19\,380\,000}{44\,532} \approx 435 \ \text{W/m}^2
+\]
+
+👉 Le système calcule donc une **irradiation solaire moyenne de 435 W/m²** sur la journée, ce qui enrichit l’analyse des données environnementales.
+
+---
+
 ## 💾 Arborescence
 
 ```
