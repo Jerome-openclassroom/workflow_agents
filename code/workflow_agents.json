@@ -1,0 +1,542 @@
+{
+  "name": "Agents_coordonnés",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -224,
+        -224
+      ],
+      "id": "2794b36d-794f-4c78-97be-dffe597c2910",
+      "name": "When chat message received",
+      "webhookId": "e723742f-7c57-4899-adb8-067aefcdcd06"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -80,
+        48
+      ],
+      "id": "e3b4c5fb-7bf3-4873-90d1-46de4167c3dc",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -256,
+        320
+      ],
+      "id": "035b39cd-85dc-431c-a96c-f8311e6ff786",
+      "name": "Simple Memory1"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        672,
+        320
+      ],
+      "id": "522e5784-2aeb-45ca-a317-85b6455eac53",
+      "name": "Simple Memory2"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1jJbGnJuRDX2c1QQ09DhSfqygPxcY1CFnqXJSu8hkJgo",
+          "mode": "list",
+          "cachedResultName": "Log",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1jJbGnJuRDX2c1QQ09DhSfqygPxcY1CFnqXJSu8hkJgo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Feuille 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1jJbGnJuRDX2c1QQ09DhSfqygPxcY1CFnqXJSu8hkJgo/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "reasonning": "={{ $json.reasoning }}",
+            "delegation": "={{ $json.delegation }}",
+            "result": "={{ $json.result }}"
+          },
+          "matchingColumns": [
+            "Log"
+          ],
+          "schema": [
+            {
+              "id": "reasonning",
+              "displayName": "reasonning",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "delegation",
+              "displayName": "delegation",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "result",
+              "displayName": "result",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        560,
+        -224
+      ],
+      "id": "6b48ca3a-2510-499a-b731-5919779b67d2",
+      "name": "Log Exécution",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "31LaukvmbfzpoFVr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Tu es l’Agent coordinateur.  \nTon rôle est d’orchestrer deux agents spécialisés, en générant pour chacun un prompt système adapté et en traitant leurs retours.  \n\n---\n\n- **Agent_executant_1 (Retrieve)**  \n  - Utilise les outils de données (Meteo, Ephemeride_rayonnement, Date_&_Time).  \n  - Son rôle est de répondre uniquement avec des informations **réelles issues des outils**, sans inventer ni extrapoler.  \n  - Prompt système que tu dois générer pour lui :  \n    \"Tu es Agent_executant_1.  \n     Tu n’as aucune connaissance interne, ta seule source de vérité sont tes outils (Meteo, Ephemeride_rayonnement, Date_&_Time).  \n     Récupère les données demandées (météo, date, éphéméride, rayonnement solaire).  \n     Réponds uniquement avec le JSON brut renvoyé par les outils, en structurant par champs pertinents.  \n     Si l’outil ne retourne rien, écris {\\\"error\\\": \\\"aucune donnée\\\"}.\"  \n\n  - Note : L’Agent_executant_1 est configuré pour Marseille uniquement (URL fixe).  \n    Il n’est donc pas nécessaire de demander une localisation ou une date future.  \n    Si la demande utilisateur ne précise pas de ville ou de date, utilise par défaut **Marseille** et la **date du jour**.  \n\n---\n\n- **Agent_executant_2 (Messagerie)**  \n  - Utilise les outils de communication (Gmail, Discord via HTTP_Request).  \n  - Son rôle est d’envoyer un message clair, en respectant le format imposé.  \n  - Prompt système que tu dois générer pour lui :  \n    \"Tu es Agent_executant_2.  \n     Prépare un message à envoyer.  \n     Pour Discord, retourne obligatoirement un JSON { \\\"content\\\": \\\"<MESSAGE>\\\" }.  \n     Pour Gmail, retourne un objet avec To, Subject et Message.\"  \n\n---\n\n- **Tes règles**  \n  - Choisis l’exécutant en fonction de la demande utilisateur.  \n  - Génère dynamiquement son prompt système avant de lui déléguer la tâche.  \n  - Structure toujours tes retours en JSON avec trois champs :  \n    ```json\n    {\n      \"reasoning\": \"...\",\n      \"delegation\": \"Agent_executant_1 ou 2\",\n      \"result\": { ... }\n    }\n    ```  \n  - Ne produis jamais d’output directement exploitable par un outil sans respecter le format demandé.  \n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -16,
+        -224
+      ],
+      "id": "742745c9-df19-47af-8325-9766eeedabb4",
+      "name": "Agent coordinateur"
+    },
+    {
+      "parameters": {
+        "url": "http://api.weatherapi.com/v1/current.json?key=98adae444b4947a3a4e91950250905&q=Marseille&aqi=no",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -80,
+        320
+      ],
+      "id": "0aec1874-9736-45bf-b4ad-067b12a31b8e",
+      "name": "Meteo"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTimeTool",
+      "typeVersion": 2,
+      "position": [
+        64,
+        320
+      ],
+      "id": "7259301c-0a8b-4085-af6e-b3b123751ea1",
+      "name": "Date_&_Time"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Makes an HTTP request and returns the response data : sunset, sunrise (localTime), shortwave_radiation_sum in MJ/m² for the city of Marseille (France)",
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=43.297&longitude=5.3811&daily=shortwave_radiation_sum,sunset,sunrise&timezone=Europe%2FBerlin&start_date=2025-09-18&end_date=2025-09-18",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        320
+      ],
+      "id": "9add60f6-280a-40a1-9cbe-dd650800e3d3",
+      "name": "ephemeride_rayonnement"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "emailType": "text",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        1008,
+        304
+      ],
+      "id": "8b1297a9-0ae3-4572-8422-cee2b2532128",
+      "name": "Gmail",
+      "webhookId": "8d278f44-352f-4db7-aa03-3c54e24acf93",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "1p5L8t0Ti7Odu8ke",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        96,
+        96
+      ],
+      "id": "41f24f66-67e0-4c8f-81c9-07d0e4026a83",
+      "name": "Agent_executant_1"
+    },
+    {
+      "parameters": {
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        576,
+        96
+      ],
+      "id": "8f6ee4da-2694-4a9d-b57e-1d5d38a1292b",
+      "name": "Agent_executant_2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://discord.com/api/webhooks/1370382062359674921/-TSE6oDOgPZBStvDkjoCElAoZ5IMZU-ym74hEnf4ggeSWVaiC2j0qnGXvS-m0UXG62s1",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('JSON', ``, 'json') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        848,
+        304
+      ],
+      "id": "690ef8a5-7048-4512-bc07-35e22bc46823",
+      "name": "HTTP_Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = items[0].json.output;\n\n// Supprimer les balises ```json et les sauts de ligne\nconst cleaned = raw.replace(/```json\\n|```/g, '').trim();\n\n// Parser le JSON\nconst parsed = JSON.parse(cleaned);\n\n// Retourner les champs séparément\nreturn [\n  {\n    json: {\n      reasoning: parsed.reasoning,\n      delegation: parsed.delegation,\n      result: parsed.result.message\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        336,
+        -224
+      ],
+      "id": "a8ce920b-0c61-4d79-9d8d-7928537d7c76",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5",
+          "mode": "list",
+          "cachedResultName": "gpt-5"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -304,
+        48
+      ],
+      "id": "d18a9758-311e-48c5-a282-eae249270755",
+      "name": "OpenAI GPT5",
+      "credentials": {
+        "openAiApi": {
+          "id": "NoZ9aJ2jaS1NHCrC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -432,
+        320
+      ],
+      "id": "a2902210-456a-457d-9ce6-60bec595ec1b",
+      "name": "OpenAI GPT4o",
+      "credentials": {
+        "openAiApi": {
+          "id": "NoZ9aJ2jaS1NHCrC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        496,
+        320
+      ],
+      "id": "1b10a7ab-b0ef-4e7f-80d1-6fc86d128645",
+      "name": "OpenAI GPT4o_2",
+      "credentials": {
+        "openAiApi": {
+          "id": "NoZ9aJ2jaS1NHCrC",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Agent coordinateur",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Agent coordinateur",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Agent_executant_1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory2": {
+      "ai_memory": [
+        [
+          {
+            "node": "Agent_executant_2",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent coordinateur": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Meteo": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent_executant_1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date_&_Time": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent_executant_1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ephemeride_rayonnement": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent_executant_1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent_executant_2",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent_executant_1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent coordinateur",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent_executant_2": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent coordinateur",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP_Request": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent_executant_2",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Log Exécution",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI GPT5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent coordinateur",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI GPT4o": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent_executant_1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI GPT4o_2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent_executant_2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "97175b73-c7c5-4891-a2d9-4869c6464f03",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "779524e63dbde32a73cbf739cde16780b056dc31072ff92c4fdba4f2d62e9ee8"
+  },
+  "id": "dQbeSz0jZeZaYsXE",
+  "tags": []
+}
