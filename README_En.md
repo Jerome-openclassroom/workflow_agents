@@ -10,6 +10,12 @@ The goal is to showcase a **distributed agentic approach**, with dynamic prompts
 
 ---
 
+## 🖼️ Workflow Overview
+
+![Multi-agent workflow](https://github.com/Jerome-openclassroom/workflow_agents/blob/main/screenshots/workflow.png)
+
+---
+
 ## ⚙️ Main Features
 - **Coordinator agent**: selects the executor, generates dynamic system prompts, and logs decisions.  
 - **Agent_executant_1 (Retrieve)**: fetches weather, ephemeris, solar radiation (fixed city: Marseille).  
