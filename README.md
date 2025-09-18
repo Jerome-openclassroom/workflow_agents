@@ -60,7 +60,9 @@ workflow_agents/
 ├── screenshots/        # Captures d’écran illustratives
 │   ├── Log.png         # Exemple de log dans Google Sheets
 │   ├── mail.png        # Exemple de mail généré par l’agent messagerie
-│   └── workflow.png    # Vue d’ensemble du workflow n8n
+│   ├── workflow.png    # Vue d’ensemble du workflow n8n
+│   └── discord.png     # Exemple de message généré automatiquement dans Discord
+
 ```
 
 ---
