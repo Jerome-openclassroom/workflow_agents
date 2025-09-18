@@ -10,6 +10,12 @@ L’objectif est de démontrer une approche **agentique distribuée**, avec prom
 
 ---
 
+## 🖼️ Aperçu du workflow
+
+![Workflow multi-agents](https://github.com/Jerome-openclassroom/workflow_agents/blob/main/screenshots/workflow.png)
+
+---
+
 ## ⚙️ Fonctionnalités principales
 - **Agent coordinateur** : sélectionne quel exécutant activer, génère les prompts systèmes dynamiques et trace les décisions.  
 - **Agent_executant_1 (Retrieve)** : récupère météo, éphéméride, rayonnement solaire (ville fixe : Marseille).  
