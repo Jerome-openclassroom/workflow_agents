@@ -25,6 +25,29 @@ The goal is to showcase a **distributed agentic approach**, with dynamic prompts
 
 ---
 
+## ☀️ Scientific Calculation: Average Solar Irradiance
+
+The workflow goes beyond retrieving raw data: it also derives **physical indicators**.
+
+Example for Marseille (09/18/2025):  
+- **Daily solar radiation sum**: 19.38 MJ/m²  
+- **Sunrise**: 07:21  
+- **Sunset**: 19:43  
+- **Day length**: ≈ 12.37 h  
+
+Conversion:  
+- 19.38 MJ/m² = 19,380,000 J/m²  
+- Duration = 12.37 h = 44,532 s  
+
+Average irradiance:  
+\[
+\frac{19,380,000}{44,532} \approx 435 \ \text{W/m}^2
+\]
+
+👉 The system thus computes an **average solar irradiance of 435 W/m²** for the day, adding scientific depth to the environmental analysis.
+
+
+---
 ## 💾 Structure
 
 ```
