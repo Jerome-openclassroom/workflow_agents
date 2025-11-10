@@ -25,6 +25,13 @@ The goal is to showcase a **distributed agentic approach**, with dynamic prompts
 
 ---
 
+🎥 Video footage 
+
+A full demonstration of the multi-agent workflow is available on YouTube.
+This 2-minute video showcases the agents coordination, Google Sheets logging, and automated message delivery.
+
+👉 https://youtu.be/JVDnXjQPl0w
+
 ## ☀️ Scientific Calculation: Average Solar Irradiance
 
 The workflow goes beyond retrieving raw data: it also derives **physical indicators**.
