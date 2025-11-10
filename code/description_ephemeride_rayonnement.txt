@@ -1,0 +1,6 @@
+Makes an HTTP request and returns the response data : sunset, sunrise (localTime), shortwave_radiation_sum in MJ/m² for the city of Marseille (France)
+The URL is like this :
+https://api.open-meteo.com/v1/forecast?latitude=43.297&longitude=5.3811&daily=shortwave_radiation_sum,sunset,sunrise&timezone=Europe%2FBerlin&start_date=2025-09-18&end_date=2025-09-18
+
+Replace the field 2025-09-18 in the URL by the current date given by the tool date_and_time
+use the same format.
