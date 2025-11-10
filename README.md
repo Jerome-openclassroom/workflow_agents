@@ -25,6 +25,13 @@ L’objectif est de démontrer une approche **agentique distribuée**, avec prom
 
 ---
 
+🎥 Démonstration vidéo
+
+🇫🇷 Version française :
+Une démonstration complète du workflow multi-agents est disponible sur YouTube.
+Cette vidéo (≈2 min) illustre la coordination entre les agents, le logging dans Google Sheets et l’envoi automatisé des messages.
+👉 https://youtu.be/JVDnXjQPl0w
+
 ## ☀️ Calcul scientifique : Irradiation solaire moyenne
 
 Le workflow ne se contente pas de récupérer des données brutes : il permet aussi d’en extraire des **indicateurs physiques**.
