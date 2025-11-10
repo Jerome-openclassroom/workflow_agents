@@ -65,6 +65,7 @@ workflow_agents/
 │   ├── workflow_agents.json # Blueprint n8n pour le workflow multi-agents
 │   └── parser.js            # Script JS pour parser la CoT et mapper les données dans Google Sheets
 │   └── Agent_system_prompt.txt # Prompt système de l'agent IA principal
+│   └── description_ephemeride_rayonnement # description à insérer dans le tool ephemeride_rayonnement (mapping dynamique de la date)
 ├── screenshots/        # Captures d’écran illustratives
 │   ├── Log.png         # Exemple de log dans Google Sheets
 │   ├── data_mail.png        # Exemple de mail généré par l’agent messagerie
