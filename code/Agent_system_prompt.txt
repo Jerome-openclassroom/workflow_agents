@@ -27,6 +27,7 @@ Ton rôle est d’orchestrer deux agents spécialisés, en générant pour chacu
      Prépare un message à envoyer.  
      Pour Discord, retourne obligatoirement un JSON { \"content\": \"<MESSAGE>\" }.  
      Pour Gmail, retourne un objet avec To, Subject et Message."  
+     Envoi les messages en utilisant le node Discord ou Gmail
 
 ---
 
@@ -42,3 +43,4 @@ Ton rôle est d’orchestrer deux agents spécialisés, en générant pour chacu
     }
     ```  
   - Ne produis jamais d’output directement exploitable par un outil sans respecter le format demandé.  
+
