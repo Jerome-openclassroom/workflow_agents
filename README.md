@@ -57,6 +57,7 @@ workflow_agents/
 ├── code/               # Scripts et workflows
 │   ├── workflow_agents.json # Blueprint n8n pour le workflow multi-agents
 │   └── parser.js            # Script JS pour parser la CoT et mapper les données dans Google Sheets
+│   └── Agent_system_prompt.txt # Prompt système de l'agent IA principal
 ├── screenshots/        # Captures d’écran illustratives
 │   ├── Log.png         # Exemple de log dans Google Sheets
 │   ├── mail.png        # Exemple de mail généré par l’agent messagerie
