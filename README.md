@@ -2,7 +2,7 @@
 
 Ce projet présente une architecture **multi-agents** réalisée avec **n8n**, intégrant :  
 - un **agent coordinateur** (GPT-5),  
-- deux **agents exécutants** (GPT-4o) spécialisés (récupération de données, envoi de messages),  
+- deux **agents exécutants** (GPT-5) spécialisés (récupération de données, envoi de messages),  
 - un **système de logs** dans Google Sheets,  
 - des intégrations concrètes (météo, éphéméride, rayonnement solaire, Gmail, Discord).  
 
